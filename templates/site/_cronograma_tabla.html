@@ -8,8 +8,10 @@
     </thead>
     <tbody>
         {% for s in semanas %}
-        <tr>
-            <td class="crono-table__wk">{{ s.semana }}</td>
+        <tr class="{% if s.vigente %}crono-table__row--vigente{% endif %}" {% if s.vigente %}id="semana-vigente"{% endif %}>
+            <td class="crono-table__wk">
+                <span class="crono-table__numero">{{ s.semana }}</span>
+            </td>
             {% for c in s.clases %}
             <td class="crono-cell">
                 <div class="crono-class {% if c.tipo in ['Feriado', 'Sin clases'] %}crono-class--muted{% endif %}">

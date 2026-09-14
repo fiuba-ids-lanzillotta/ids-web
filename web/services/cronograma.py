@@ -60,14 +60,18 @@ def _agrupar_semanas(clases: list[dict]) -> list[dict]:
         por_semana.setdefault(semana, []).append(vista)
 
     return [
-        {'semana': semana, 'clases': items}
+        {
+            'semana': semana,
+            'clases': items,
+            'vigente': any(item.get('vigente') for item in items),
+        }
         for semana, items in sorted(por_semana.items())
     ]
 
 def obtener_semana_actual(semanas: list[dict]) -> dict | None:
     """Elige el grupo que ids-api marcó con vigente=true."""
     for semana in semanas:
-        if any(clase.get('vigente') for clase in semana.get('clases') or []):
+        if semana.get('vigente'):
             return semana
 
     return None
