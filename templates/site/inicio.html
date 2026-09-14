@@ -40,6 +40,51 @@
     {# ===== Información general + enlaces ===== #}
     <section class="info">
         <div class="info__inner">
+            <div class="semana-actual" aria-labelledby="semana-actual-titulo">
+                <div class="semana-actual__encabezado">
+                    <h3 class="info__heading" id="semana-actual-titulo">Semana actual</h3>
+                    {% if semana_actual %}
+                    <span class="semana-actual__numero">Semana {{ semana_actual.semana }}</span>
+                    {% endif %}
+                </div>
+
+                {% if semana_actual %}
+                <div class="semana-actual__clases">
+                    {% for clase in semana_actual.clases %}
+                    <article class="clase-semanal {% if clase.tipo in ['Feriado', 'Sin clases'] %}clase-semanal--inactiva{% endif %}">
+                        <div class="clase-semanal__encabezado">
+                            <time class="clase-semanal__fecha" datetime="{{ clase.fecha_iso }}">{{ clase.fecha }}</time>
+                            <span class="badge badge--{{ clase.tipo|lower|replace(' ', '-') }}">{{ clase.tipo }}</span>
+                        </div>
+
+                        {% if clase.titulo %}<p class="clase-semanal__titulo">{{ clase.titulo }}</p>{% endif %}
+
+                        {% if clase.contenidos %}
+                        <ul class="clase-semanal__contenidos">
+                            {% for contenido in clase.contenidos %}
+                            <li>{{ contenido }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% elif not clase.hitos %}
+                        <p class="clase-semanal__sin-contenido">Sin temas especificados.</p>
+                        {% endif %}
+
+                        {% for hito in clase.hitos %}
+                        <p class="clase-semanal__hito">{{ hito }}</p>
+                        {% endfor %}
+                    </article>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="semana-actual__vacia">
+                    <p>No hay clases programadas para esta semana.</p>
+                </div>
+                {% endif %}
+
+                <a href="{{ url_for('web.site.cronograma.index') }}" class="semana-actual__enlace">
+                    Ver cronograma completo <span aria-hidden="true">→</span>
+                </a>
+            </div>
             <h3 class="info__heading">Información General</h3>
             <p class="info__text">Las clases se llevarán a cabo los días lunes y miércoles de 18:30hs a 21:30 hs.</p>
             <p class="info__text">

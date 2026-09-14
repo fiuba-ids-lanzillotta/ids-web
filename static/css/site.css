@@ -42,6 +42,98 @@
 .slack-banner__desc { font-size: 18px; color: #ede9f6; }
 .slack-banner__logo { height: 64px; object-fit: contain; flex-shrink: 0; width: auto; }
 
+/* ===== Semana vigente (inicio) ===== */
+.semana-actual { margin-bottom: 28px; }
+
+.semana-actual__encabezado {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 12px;
+}
+
+.semana-actual__encabezado .info__heading { margin: 0; }
+
+.semana-actual__numero {
+    color: #6b7280;
+    font-size: 16px;
+    white-space: nowrap;
+}
+
+.semana-actual__clases {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.clase-semanal {
+    background: #ffffff;
+    border: 1px solid #e3e8f0;
+    border-radius: 16px;
+    padding: 16px 20px;
+}
+
+.clase-semanal--inactiva { background: #f7f9fc; }
+
+.clase-semanal__encabezado {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 6px;
+}
+
+.clase-semanal__fecha {
+    color: #1f2937;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.clase-semanal__titulo {
+    color: #1f2937;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.clase-semanal__contenidos {
+    margin: 0;
+    padding-left: 18px;
+    color: #374151;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.clase-semanal__sin-contenido {
+    color: #9aa3af;
+    font-size: 14px;
+}
+
+.clase-semanal__hito {
+    color: #c0392b;
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 6px;
+}
+
+.semana-actual__vacia {
+    color: #6b7280;
+    padding: 16px 20px;
+    background: #ffffff;
+    border: 1px solid #e3e8f0;
+    border-radius: 16px;
+}
+
+.semana-actual__enlace {
+    display: inline-block;
+    color: #2f6db0;
+    font-size: 16px;
+    margin-top: 14px;
+    text-decoration: none;
+}
+
+.semana-actual__enlace:hover { text-decoration: underline; }
+
 /* ===== Info general ===== */
 
 .info__inner { padding: 40px 32px 64px; }
@@ -103,12 +195,15 @@
 /* ===== Responsive (publico) ===== */
 @media (max-width: 900px) {
     .links { grid-template-columns: repeat(2, 1fr); }
+    .semana-actual__clases { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 560px) {
     .links { grid-template-columns: 1fr; }
     .slack-banner__inner { flex-direction: column; text-align: center; }
     .terminal__inner { font-size: 13px; padding: 32px 20px; }
+    .semana-actual__encabezado { align-items: flex-start; flex-direction: column; gap: 4px; }
+    .clase-semanal__encabezado { align-items: flex-start; flex-direction: column; gap: 6px; }
 }
 /* ===== Página Cursada ===== */
 .cursada {

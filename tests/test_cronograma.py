@@ -33,6 +33,25 @@ def test_agrupar_semanas_ordena_por_semana():
 
     assert [grupo['semana'] for grupo in grupos] == [1, 2]
 
+def test_obtener_semana_actual_usa_vigente():
+    semanas = cronograma._agrupar_semanas([
+        {'semana': 3, 'fecha': '2026-09-02', 'vigente': False, 'contenidos': []},
+        {'semana': 4, 'fecha': '2026-09-07', 'vigente': True, 'contenidos': []},
+        {'semana': 4, 'fecha': '2026-09-09', 'vigente': True, 'contenidos': []},
+    ])
+
+    actual = cronograma.obtener_semana_actual(semanas)
+
+    assert actual['semana'] == 4
+    assert len(actual['clases']) == 2
+
+
+def test_obtener_semana_actual_sin_vigente():
+    semanas = cronograma._agrupar_semanas([
+        {'semana': 1, 'fecha': '2026-08-17', 'vigente': False, 'contenidos': []},
+    ])
+
+    assert cronograma.obtener_semana_actual(semanas) is None
 
 def test_body_desde_formulario():
     form = MultiDict([

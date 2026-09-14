@@ -47,6 +47,7 @@ def _clase_para_vista(clase: dict) -> dict:
         'titulo': clase.get('titulo') or '',
         'contenidos': contenidos,
         'hitos': hitos,
+        'vigente': bool(clase.get('vigente')),
     }
 
 
@@ -63,6 +64,18 @@ def _agrupar_semanas(clases: list[dict]) -> list[dict]:
         for semana, items in sorted(por_semana.items())
     ]
 
+def obtener_semana_actual(semanas: list[dict]) -> dict | None:
+    """Elige el grupo que ids-api marcó con vigente=true."""
+    for semana in semanas:
+        if any(clase.get('vigente') for clase in semana.get('clases') or []):
+            return semana
+
+    return None
+
+
+def obtener_semana_en_curso() -> dict | None:
+    """Lee GET /cronograma/clases y devuelve la semana que la API marca como vigente."""
+    return obtener_semana_actual(obtener_semanas())
 
 def obtener_semanas() -> list[dict]:
     """Lista el cronograma agrupado por semana, listo para la tabla."""

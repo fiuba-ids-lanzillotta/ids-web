@@ -13,10 +13,19 @@ def client():
 
 # --- páginas públicas (services vía requests, mockeado) ---
 
-def test_pagina_inicio_ok(client):
+def test_pagina_inicio_muestra_semana_actual(client, monkeypatch, respuesta_falsa, cargar_json):
+    clases = [
+        {**clase, 'vigente': clase.get('semana') == 4}
+        for clase in cargar_json('json/cronograma/clases.json')
+    ]
+    monkeypatch.setattr(requests, 'get', lambda *args, **kwargs: respuesta_falsa(200, clases))
+
     respuesta = client.get('/')
 
     assert respuesta.status_code == 200
+    assert b'Esta semana' in respuesta.data
+    assert b'Semana 4' in respuesta.data
+    assert b'Python + Flask' in respuesta.data
 
 
 def test_pagina_cronograma_ok(client, monkeypatch, respuesta_falsa, cargar_json):
